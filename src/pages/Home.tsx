@@ -66,7 +66,7 @@ const Home: NextPage<IHomeProps> = ({ forecastData }: IHomeProps, props) => {
                 <HiOutlineDotsHorizontal />
               </button>
             </div>
-            <h1>Londres, Reino Unido</h1>
+            <h1>London, United Kingdom</h1>
           </CardHead>
           <WeatherDetails>
             <WeatherDetailsLeft>
@@ -103,7 +103,7 @@ const Home: NextPage<IHomeProps> = ({ forecastData }: IHomeProps, props) => {
             ))}
           </DaysOfWeeks>
           <Footer>
-            <button>Ver previsão completa</button>
+            <button>See full forecast</button>
           </Footer>
         </Card>
       </Content>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   min-height: 100vh;
+  min-width: 100vw;
   display: flex;
   justify-content: center;
   background: linear-gradient(rgba(218, 205, 205, 0.1), black),
@@ -31,7 +32,7 @@ export const Card = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 500px;
-  width: 500px;
+  max-width: 600px;
 
   background-attachment: fixed;
   background-size: 100%;
@@ -50,6 +51,10 @@ export const Card = styled.div`
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid rgba(109, 218, 252, 0.28);
+
+  @media (max-width: 768px) {
+    min-width: 100vw;
+  }
 `;
 
 export const CardHead = styled.div`
@@ -109,7 +114,8 @@ export const DaysOfWeeks = styled.div`
 `;
 
 export const DayWrapper = styled.div`
-  flex: 1 1 100px;
+  flex: 1;
+
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -120,12 +126,19 @@ export const DayWrapper = styled.div`
   font-weight: 700;
   font-size: 16px;
 
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (min-width: 768px) {
+    min-width: 100px;
+  }
+
   div {
     display: flex;
     justify-content: center;
     height: 100%;
     align-items: center;
-
+    padding: 2px;
     svg {
       font-size: 30px;
     }
