@@ -28,12 +28,12 @@ export const Content = styled.div`
 `;
 
 export const Card = styled.div`
+  transition: all 2s ease-in-out;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 500px;
-  max-width: 600px;
-
+  max-width: 100%;
   background-attachment: fixed;
   background-size: 100%;
   text-align: center;
@@ -54,6 +54,7 @@ export const Card = styled.div`
 
   @media (max-width: 768px) {
     min-width: 100vw;
+    height: 100%;
   }
 `;
 
@@ -70,6 +71,7 @@ export const CardHead = styled.div`
     border: none;
     padding: 5px;
     border-radius: 50%;
+
     :hover {
       background-color: rgba(255, 255, 255, 0.5);
       cursor: pointer;
@@ -90,6 +92,8 @@ export const WeatherDetailsLeft = styled.div`
   text-align: left;
   flex: 1;
   font-size: 36px;
+  display: flex;
+  align-items: center;
 `;
 
 export const WeatherDetailsRight = styled.div`
@@ -98,24 +102,31 @@ export const WeatherDetailsRight = styled.div`
   flex: 1;
   font-size: 16px;
   display: flex;
+  align-items: center;
 
   svg {
-    font-size: 36px;
+    font-size: 56px;
   }
+
   span {
     text-align: right;
+    text-transform: capitalize;
+    font-size: 18px;
+    margin-right: 5px;
   }
 `;
 
 export const DaysOfWeeks = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 50%;
+  min-height: 50%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const DayWrapper = styled.div`
   flex: 1;
-
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -125,10 +136,13 @@ export const DayWrapper = styled.div`
   justify-content: center;
   font-weight: 700;
   font-size: 16px;
+  padding: 10px;
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 16px;
+    margin-bottom: 10px;
   }
+
   @media (min-width: 768px) {
     min-width: 100px;
   }
@@ -138,7 +152,7 @@ export const DayWrapper = styled.div`
     justify-content: center;
     height: 100%;
     align-items: center;
-    padding: 2px;
+
     svg {
       font-size: 30px;
     }
@@ -155,6 +169,11 @@ export const Footer = styled.div`
     color: white;
     :hover {
       cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      font-size: 18px;
     }
   }
 `;

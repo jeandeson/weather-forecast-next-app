@@ -19,30 +19,46 @@ import { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
-import type { Forecast } from "../types/Forecast";
+import type { current, Forecast } from "../types/Forecast";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import ThemeContext from "../contexts/theme/themeContext";
 
 interface IHomeProps {
   forecastData: Forecast[];
+  current: current;
 }
 
-const Home: NextPage<IHomeProps> = ({ forecastData }: IHomeProps, props) => {
-  const [weather, setWeather] = useState<Forecast[]>(forecastData);
-  const weekday = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+const weekday = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
-  function getWeatherIcon(graus: number) {
-    if (graus <= 0) {
+const Home: NextPage<IHomeProps> = (
+  { forecastData, current }: IHomeProps,
+  props
+) => {
+  const [weather, setWeather] = useState<Forecast[]>(forecastData);
+  const [weatherPreview, setWeatherPreview] = useState<Forecast[]>([]);
+  const [togglePreview, setTogglePreview] = useState(false);
+
+  useEffect(() => {
+    const aux: Forecast[] = [];
+    for (let i = 0; i < 5; i++) {
+      const element = forecastData[i];
+      aux.push(element);
+    }
+    setWeatherPreview(aux);
+  }, []);
+
+  function getWeatherIcon(main: string) {
+    if (main === "Rain") {
       return <TiWeatherDownpour />;
-    } else if (graus <= 24) {
+    } else if (main === "Clouds") {
       return <TiWeatherCloudy />;
     } else {
       return <TiWeatherSunny />;
@@ -61,7 +77,7 @@ const Home: NextPage<IHomeProps> = ({ forecastData }: IHomeProps, props) => {
         <Card>
           <CardHead>
             <div>
-              <h3>CLIMA</h3>
+              <h3>WEATHER</h3>
               <button>
                 <HiOutlineDotsHorizontal />
               </button>
@@ -74,36 +90,73 @@ const Home: NextPage<IHomeProps> = ({ forecastData }: IHomeProps, props) => {
               {"°C"}
             </WeatherDetailsLeft>
             <WeatherDetailsRight>
-              {/* pred ensolarado <span>50%</span> */}
-              {getWeatherIcon(weather[0].temperatureC)}
+              <span>{current.weather[0].description}</span>
+              {getWeatherIcon(current.weather[0].main)}
             </WeatherDetailsRight>
           </WeatherDetails>
           <DaysOfWeeks>
-            {weather.map((item, index) => (
-              <DayWrapper key={index}>
-                <div>
-                  <span>{weekday[new Date(item.date).getDay()]}</span>
-                </div>
-                <div>
-                  <span>
-                    {item.temperatureF}
-                    {"°F"}
-                  </span>
-                </div>
-                <div>
-                  <span>{getWeatherIcon(item.temperatureC)}</span>
-                </div>
-                <div>
-                  <span>
-                    {item.temperatureC}
-                    {"°C"}
-                  </span>
-                </div>
-              </DayWrapper>
-            ))}
+            {togglePreview === false
+              ? weatherPreview.map((item, index) => (
+                  <DayWrapper key={index}>
+                    <div>
+                      <span>{weekday[new Date(item.date).getDay()]}</span>
+                    </div>
+                    <div>
+                      <span>
+                        {item.temperatureF}
+                        {"°F"}
+                      </span>
+                    </div>
+                    <div>
+                      <span>{getWeatherIcon(item.main)}</span>
+                    </div>
+                    <div>
+                      <span>
+                        {item.temperatureC}
+                        {"°C"}
+                      </span>
+                    </div>
+                  </DayWrapper>
+                ))
+              : weather.map((item, index) => (
+                  <DayWrapper key={index}>
+                    <div>
+                      <span>
+                        {index === 0
+                          ? "Today"
+                          : weekday[new Date(item.date).getDay()]}
+                      </span>
+                    </div>
+                    <div>
+                      <span>
+                        {item.temperatureF}
+                        {"°F"}
+                      </span>
+                    </div>
+                    <div>
+                      <span>{getWeatherIcon(item.main)}</span>
+                    </div>
+                    <div>
+                      <span>
+                        {item.temperatureC}
+                        {"°C"}
+                      </span>
+                    </div>
+                  </DayWrapper>
+                ))}
           </DaysOfWeeks>
           <Footer>
-            <button>See full forecast</button>
+            <button
+              onClick={() => {
+                setTogglePreview(!togglePreview);
+              }}
+            >
+              {!togglePreview ? (
+                <span>{"See Full Forecast"}</span>
+              ) : (
+                <span>{"Back To Preview"}</span>
+              )}
+            </button>
           </Footer>
         </Card>
       </Content>
