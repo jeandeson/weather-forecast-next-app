@@ -1,4 +1,5 @@
 export interface current {
+  location: string;
   dt: number;
   temp: number;
   feels_like: number;
@@ -48,18 +49,6 @@ export interface IForecasApiResponse {
 }
 
 export interface ForecastData {
-  current?: {
-    dt: number;
-    temp: number;
-    feels_like: number;
-    weather: [
-      {
-        id: number;
-        main: string;
-        description: string;
-        icon: string;
-      }
-    ];
-  };
+  current?: current;
   forecastData: Forecast[];
 }

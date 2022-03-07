@@ -29,7 +29,7 @@ const App: NextPage<IHomeProps> = ({ forecastData, current }: IHomeProps) => {
       } else {
         setState({
           backgroundImg:
-            "https://cdn.pixabay.com/photo/2016/09/28/05/12/sunny-sky-1699784_1280.jpg",
+            "https://t4.ftcdn.net/jpg/03/36/32/85/360_F_336328559_Yj7LbFIlTC9Zj7qbkcJ4IJJ3yWimb4x0.jpg",
         });
       }
     }

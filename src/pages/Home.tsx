@@ -38,10 +38,7 @@ const weekday = [
   "Saturday",
 ];
 
-const Home: NextPage<IHomeProps> = (
-  { forecastData, current }: IHomeProps,
-  props
-) => {
+const Home: NextPage<IHomeProps> = ({ forecastData, current }: IHomeProps) => {
   const [weather, setWeather] = useState<Forecast[]>(forecastData);
   const [weatherPreview, setWeatherPreview] = useState<Forecast[]>([]);
   const [togglePreview, setTogglePreview] = useState(false);
@@ -82,7 +79,7 @@ const Home: NextPage<IHomeProps> = (
                 <HiOutlineDotsHorizontal />
               </button>
             </div>
-            <h1>London, United Kingdom</h1>
+            <h1>{current.location}</h1>
           </CardHead>
           <WeatherDetails>
             <WeatherDetailsLeft>
@@ -99,7 +96,9 @@ const Home: NextPage<IHomeProps> = (
               ? weatherPreview.map((item, index) => (
                   <DayWrapper key={index}>
                     <div>
-                      <span>{weekday[new Date(item.date).getDay()]}</span>
+                      {index === 0
+                        ? "Today"
+                        : weekday[new Date(item.date).getDay()]}
                     </div>
                     <div>
                       <span>
